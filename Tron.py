@@ -1,11 +1,15 @@
 import turtle
-scr = turtle.Screen()
+import time
+
 print("Player 1: WASD")
 print("Player 2: Arrow Keys")
 print("Player 3: IJKL")
 print("Player 4: TFGH")
 stPlayers = input("Number of players: ")
 intPlayers = int(stPlayers)
+
+scr = turtle.Screen()
+
 global alive
 alive = []
 
@@ -26,24 +30,32 @@ p4.hideturtle()
 
 def t1(t):
     #Define Player 1
+    t.pensize(3)
+    t.shape("turtle")
     t.setheading(0)
     t.color("red")
     t.goto(1, 0)
     t.st()
 def t2(t):
     #Define Player 2
+    t.pensize(3)
+    t.shape("triangle")
     t.setheading(180)
     t.color("blue")
     t.goto(-1, 0)
     t.st()
 def t3(t):
     #Define Player 3
+    t.pensize(3)
+    t.shape("circle")
     t.setheading(270)
     t.color("green")
     t.goto(0, -1)
     t.st()
 def t4(t):
     #Define Player 4
+    t.pensize(3)
+    t.shape("square")
     t.setheading(90)
     t.color("purple")
     t.goto(0, 1)
@@ -89,8 +101,10 @@ def kill(p, t):
     alive.remove(p)
     t.hideturtle()
     w = turtle.Turtle()
+    w.ht()
     w.up()
     w.goto(-200 + (p-1)*100, -240)
+    w.st()
     w.write("Player " + str(p) + " has died!", font=("Arial", 9, "normal"))
     w.hideturtle()
 
@@ -123,58 +137,76 @@ def announceWinner(winner):
     t.speed(1000)
     t.hideturtle()
     t.goto(-500, 500)
-    t.forward(500)
+    t.forward(1000)
     t.right(90)
-    t.forward(500)
+    t.forward(1000)
     t.right(90)
-    t.forward(500)
+    t.forward(1000)
     t.right(90)
-    t.forward(500)
+    t.forward(1000)
     t.right(90)
     t.hideturtle()
     t.end_fill()
     t.goto(0, 0)
-    t.write("Player " + str(winner) + " is the winner!", True, align="center", font=("Arial", 32, "normal"))
-
+    t.showturtle()
+    t.color('black')
+    t.write("Player " + str(winner) + " has won the game!", align='center', font=("Arial", 32, "normal"))
+    t.ht()
 
 drawBoard()
 defTurtle(intPlayers)
 
 def turnUp1():
-    p1.setheading(90)
+    if(p1.heading() != 270):
+        p1.setheading(90)
 def turnDown1():
-    p1.setheading(270)
+    if(p1.heading() != 90):
+        p1.setheading(270)
 def turnLeft1():
-    p1.setheading(180)
+    if(p1.heading() != 0):
+        p1.setheading(180)
 def turnRight1():
-    p1.setheading(0)
+    if(p1.heading() != 180):
+        p1.setheading(0)
 
 def turnUp2():
-    p2.setheading(90)
+    if(p2.heading() != 270):
+        p2.setheading(90)
 def turnDown2():
-    p2.setheading(270)
+    if(p2.heading() != 90):
+        p2.setheading(270)
 def turnLeft2():
-    p2.setheading(180)
+    if(p2.heading() != 0):
+        p2.setheading(180)
 def turnRight2():
-    p2.setheading(0)
+    if(p2.heading() != 180):
+        p2.setheading(0)
 
 def turnUp3():
-    p3.setheading(90)
+    if(p3.heading() != 270):
+        p3.setheading(90)
 def turnDown3():
-    p3.setheading(270)
+    if(p3.heading() != 90):
+        p3.setheading(270)
 def turnLeft3():
-    p3.setheading(180)
+    if(p3.heading() != 0):
+        p3.setheading(180)
 def turnRight3():
-    p3.setheading(0)
+    if(p3.heading() != 180):
+        p3.setheading(0)
 
 def turnUp4():
-    p4.setheading(90)
+    if(p4.heading() != 270):
+        p4.setheading(90)
 def turnDown4():
-    p4.setheading(270)
+    if(p4.heading() != 90):
+        p4.setheading(270)
 def turnLeft4():
-    p4.setheading(180)
+    if(p4.heading() != 0):
+        p4.setheading(180)
 def turnRight4():
-    p4.setheading(0)
+    if(p4.heading() != 180):
+        p4.setheading(0)
     
 scr.onkey(turnUp1, "w")
 scr.onkey(turnDown1, "s")
@@ -195,7 +227,6 @@ scr.onkey(turnRight4, "h")
 scr.listen()
 
 while (len(alive) > 1):
-    
 
     if(1 in alive):
         moveTurtle(1, p1, pointsOccupied)
@@ -206,7 +237,5 @@ while (len(alive) > 1):
     if(4 in alive):
         moveTurtle(4, p4, pointsOccupied)
 
-
-print("Player " + str(alive[0]) + " has won the game!")
-
-
+announceWinner(alive[0])
+time.sleep(10)
