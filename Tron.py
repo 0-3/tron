@@ -1,65 +1,43 @@
 import turtle
 import time
 
-print("Player 1: WASD")
-print("Player 2: Arrow Keys")
-print("Player 3: IJKL")
-print("Player 4: TFGH")
-stPlayers = input("Number of players: ")
-intPlayers = int(stPlayers)
-
-scr = turtle.Screen()
-
-global alive
-alive = []
-
-global p1
-global p2
-global p3
-global p4
-
-p1 = turtle.Turtle()
-p2 = turtle.Turtle()
-p3 = turtle.Turtle()
-p4 = turtle.Turtle()
-p1.hideturtle()
-p2.hideturtle()
-p3.hideturtle()
-p4.hideturtle()
-
-
+# Define functions
 def t1(t):
-    #Define Player 1
+    # Define Player 1
     t.pensize(3)
     t.shape("turtle")
     t.setheading(0)
     t.color("red")
     t.goto(1, 0)
     t.st()
+
 def t2(t):
-    #Define Player 2
+    # Define Player 2
     t.pensize(3)
     t.shape("triangle")
     t.setheading(180)
     t.color("blue")
     t.goto(-1, 0)
     t.st()
+
 def t3(t):
-    #Define Player 3
+    # Define Player 3
     t.pensize(3)
     t.shape("circle")
     t.setheading(270)
     t.color("green")
     t.goto(0, -1)
     t.st()
+
 def t4(t):
-    #Define Player 4
+    # Define Player 4
     t.pensize(3)
     t.shape("square")
     t.setheading(90)
     t.color("purple")
     t.goto(0, 1)
     t.st()
+
 def defTurtle(num):
     global alive
     if(num <= 1):
@@ -98,7 +76,9 @@ def drawBoard():
     t.hideturtle()
 
 def kill(p, t):
-    alive.remove(p)
+    if len(alive) > 1:
+        alive.remove(p)
+
     t.hideturtle()
     w = turtle.Turtle()
     w.ht()
@@ -107,10 +87,6 @@ def kill(p, t):
     w.st()
     w.write("Player " + str(p) + " has died!", font=("Arial", 9, "normal"))
     w.hideturtle()
-
-global xcors, ycors
-
-pointsOccupied = {}
 
 def moveTurtle(p, t, d):
     xp = str(round(t.pos()[0]))
@@ -152,9 +128,6 @@ def announceWinner(winner):
     t.color('black')
     t.write("Player " + str(winner) + " has won the game!", align='center', font=("Arial", 32, "normal"))
     t.ht()
-
-drawBoard()
-defTurtle(intPlayers)
 
 def turnUp1():
     if(p1.heading() != 270):
@@ -207,7 +180,47 @@ def turnLeft4():
 def turnRight4():
     if(p4.heading() != 180):
         p4.setheading(0)
-    
+
+# Print Instructions
+print("Player 1: WASD")
+print("Player 2: Arrow Keys")
+print("Player 3: IJKL")
+print("Player 4: TFGH")
+
+# Input user for number of players and convert to integer
+stPlayers = input("Number of players: ")
+intPlayers = int(stPlayers)
+
+# Create turtle screen
+scr = turtle.Screen()
+
+# Globalize variables
+global alive
+global p1
+global p2
+global p3
+global p4
+global xcors, ycors
+
+# Define variables
+alive = []
+pointsOccupied = {}
+p1 = turtle.Turtle()
+p2 = turtle.Turtle()
+p3 = turtle.Turtle()
+p4 = turtle.Turtle()
+
+# Hide turtles
+p1.ht()
+p2.ht()
+p3.ht()
+p4.ht()
+
+# Create board and players
+drawBoard()
+defTurtle(intPlayers)
+
+# Listen for keybinds to move turtles
 scr.onkey(turnUp1, "w")
 scr.onkey(turnDown1, "s")
 scr.onkey(turnLeft1, "a")
@@ -226,6 +239,7 @@ scr.onkey(turnLeft4, "f")
 scr.onkey(turnRight4, "h")
 scr.listen()
 
+# Loop to move all alive turtles
 while (len(alive) > 1):
 
     if(1 in alive):
@@ -237,5 +251,6 @@ while (len(alive) > 1):
     if(4 in alive):
         moveTurtle(4, p4, pointsOccupied)
 
+# Clear the board and announce the winner, then close the screen after 10 seconds
 announceWinner(alive[0])
-time.sleep(10)
+time.sleep(5)
