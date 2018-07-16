@@ -253,4 +253,4 @@ while (len(alive) > 1):
 
 # Clear the board and announce the winner, then close the screen after 10 seconds
 announceWinner(alive[0])
-time.sleep(5)
+time.sleep(10)
